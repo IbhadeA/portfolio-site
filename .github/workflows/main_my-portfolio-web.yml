@@ -1,4 +1,4 @@
-name: Deploy static portfolio to Azure
+name: Deploy static portfolio to Azure Web App
 
 on:
   push:
@@ -13,9 +13,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: my-portfolio-web  # 🔁 use your Azure App name
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+          app-name: my-portfolio-web  # replace with your actual Azure App name
           package: .
